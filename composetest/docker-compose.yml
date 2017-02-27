@@ -1,0 +1,43 @@
+version: '2'
+services:
+  resourcemanager:
+    image: willcup/yarn:0.1
+    command: tailf /etc/hadoop/hadoop-2.7.1/etc/hadoop/yarn-site.xml
+    volumes:
+        - ./hadoop-yarn-resourcemanager/etc/hadoop:/etc/hadoop/hadoop-2.7.1/etc/hadoop/
+        - /server/wil/spark210:/etc/spark 
+        - /server/docker_hdp_logs:/etc/hadoop/hadoop-2.7.1/logs
+    environment:
+        - SERVICE=resourcemanager
+        - HADOOP_HOME=/etc/hadoop/hadoop-2.7.1
+        - PATH=/etc/hadoop/hadoop-2.7.1/bin:$PATH
+    extra_hosts:
+        - "masternode:10.1.5.91"
+        - "slavenode1:10.1.5.62"
+        - "slavenode2:10.1.5.63"
+        - "slavenode3:10.1.5.64"
+        - "slavenode4:10.1.5.65"
+        - "slavenode5:10.1.5.66"
+    ports:
+      - "8088:8088"
+  nodemanager:
+    image: willcup/yarn:0.1
+    command: read
+    volumes:
+        - ./hadoop-yarn-resourcemanager/etc/hadoop:/etc/hadoop/hadoop-2.7.1/etc/hadoop/
+        - /server/docker_hdp_logs:/etc/hadoop/hadoop-2.7.1/logs
+        - /server/wil/spark210:/etc/spark
+        - /server/wil/apache-hive-1.2.1-bin:/etc/hive
+    environment:
+        - SERVICE=nodemanager
+        - HADOOP_HOME=/etc/hadoop/hadoop-2.7.1
+        - PATH=/etc/hadoop/hadoop-2.7.1/bin:$PATH
+    extra_hosts:
+        - "masternode:10.1.5.91"
+        - "slavenode1:10.1.5.62"
+        - "slavenode2:10.1.5.63"
+        - "slavenode3:10.1.5.64"
+        - "slavenode4:10.1.5.65"
+        - "slavenode5:10.1.5.66"
+    depends_on:
+        - resourcemanager
