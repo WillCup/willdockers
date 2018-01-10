@@ -16,7 +16,7 @@ docker run \
   -p 7001:7001 \
   -v /data/backup/dir:/data \
   --name some-etcd \
-  elcolio/etcd:latest \
+  willcup/etcd:latest \
   -name some-etcd \
   -discovery=https://discovery.etcd.io/blahblahblahblah \
   -advertise-client-urls http://192.168.1.99:4001 \
