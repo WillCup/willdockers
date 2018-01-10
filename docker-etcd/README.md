@@ -1,6 +1,5 @@
-##Itty bitty Etcd container
+##Etcd container
 
-***NOTE: The tags have recently been updated!  Use elcolio/etcd:2.0.X for a specific version.  The current latest is 2.0.10***
 
 This image weighs in at 20.17 MB due to the inclusion of TLS support and etcdctl.  The `-data-dir` is a volume mounted to `/data`, and the default ports are bound to Etcd and exposed.
 
