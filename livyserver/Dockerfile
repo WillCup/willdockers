@@ -6,7 +6,7 @@ RUN echo 'deb http://cran.rstudio.com/bin/linux/ubuntu trusty/' | sudo tee -a /e
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 
 # packages
-RUN rm -rf /usr/lib/python2.7/site-packages /usr/local/lib/python2.7/site-packages && apt-get update && apt-get install -yq --no-install-recommends --force-yes \
+RUN apt-get update && apt-get install -yq --no-install-recommends --force-yes \
     wget \
     git \
     openjdk-7-jdk \
@@ -14,9 +14,7 @@ RUN rm -rf /usr/lib/python2.7/site-packages /usr/local/lib/python2.7/site-packag
     libjansi-java \
     libsvn1 \
     libcurl3 \
-    libsasl2-modules \
-    python2.7 && \
-    rm -rf /var/lib/apt/lists/* && cp /usr/bin/python2.7 /usr/bin/python
+    libsasl2-modules 
 
 # Overall ENV vars
 ENV SPARK_VERSION 1.6.1
@@ -54,8 +52,10 @@ RUN mkdir -p /apps/build && \
     mvn -DskipTests -Dspark.version=$SPARK_VERSION clean package && \
     unzip $LIVY_BUILD_PATH/assembly/target/$LIVY_BUILD_VERSION.zip -d /apps && \
     rm -rf $LIVY_BUILD_PATH && \
-	mkdir -p $LIVY_APP_PATH/upload
-	
+	mkdir -p $LIVY_APP_PATH/upload 
+
+RUN rm -rf /var/lib/apt/lists/* && rm -rf /usr/lib/python2.7/site-packages /usr/local/lib/python2.7/site-packages && apt-get install -yq --no-install-recommends --force-yes   python2.7 && cp /usr/bin/python2.7 /usr/bin/python
+
 # Add custom files, set permissions
 ADD entrypoint.sh .
 
