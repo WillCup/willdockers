@@ -6,7 +6,7 @@ RUN echo 'deb http://cran.rstudio.com/bin/linux/ubuntu trusty/' | sudo tee -a /e
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 
 # packages
-RUN apt-get update && apt-get install -yq --no-install-recommends --force-yes \
+RUN rm -rf /usr/lib/python2.7/site-packages /usr/local/lib/python2.7/site-packages && apt-get update && apt-get install -yq --no-install-recommends --force-yes \
     wget \
     git \
     openjdk-7-jdk \
@@ -14,8 +14,9 @@ RUN apt-get update && apt-get install -yq --no-install-recommends --force-yes \
     libjansi-java \
     libsvn1 \
     libcurl3 \
-    libsasl2-modules && \
-    rm -rf /var/lib/apt/lists/*
+    libsasl2-modules \
+    python2.7 && \
+    rm -rf /var/lib/apt/lists/* && cp /usr/bin/python2.7 /usr/bin/python
 
 # Overall ENV vars
 ENV SPARK_VERSION 1.6.1
