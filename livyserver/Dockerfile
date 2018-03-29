@@ -44,7 +44,6 @@ RUN wget $SPARK_DOWNLOAD_URL && \
     rm -rf -- /tmp/$SPARK_VERSION_STRING && \
     rm spark-$SPARK_VERSION-bin-hadoop2.6.tgz
 
-RUN rm -rf /usr/lib/python2.7/site-packages /usr/local/lib/python2.7/site-packages && apt-get install -yq --no-install-recommends --force-yes   python2.7 && cp /usr/bin/python2.7 /usr/bin/python && rm -rf /var/lib/apt/lists/* 
 
 # Clone Livy repository
 RUN mkdir -p /apps/build && \
