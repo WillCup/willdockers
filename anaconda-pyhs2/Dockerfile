@@ -25,6 +25,6 @@ RUN apt-get install -y curl grep sed dpkg && \
     dpkg -i tini.deb && \
     rm tini.deb 
 
-RUN apt-get install -y python-dev libsasl2-dev gcc g++ && apt-get clean && pip install thrift-sasl==0.2.1 impyla hdfs ibis-framework && apt-get clean
+RUN apt-get install -y python-dev libsasl2-dev gcc g++ && apt-get clean && pip install thrift-sasl==0.2.1 impyla hdfs ibis-framework pymysql && apt-get clean
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
